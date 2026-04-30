@@ -753,7 +753,7 @@ function handleAuthError(error) {
       event.preventDefault();
       const email = logEmail.value;
       const password = logPw.value;
-      loginUser(email, password)  
+      loginUser(email, password);
     });
   
   async function signUpUser(email, password) {
@@ -765,6 +765,7 @@ function handleAuthError(error) {
      //     const user = userCredential.user;
           await sendEmailVerification(user);
           signStatus.textContent = "Verification link sent! Please check your email and verify your account before logging in.";
+          signOut(auth);
           setTimeout(() => {
             window.location.replace('index.html?mode=login');
           }, 2000);
