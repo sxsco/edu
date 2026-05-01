@@ -407,6 +407,7 @@ async function fetchAllUsers(userId) {
   }
 }
 */
+
    
   auth.useDeviceLanguage();
   provider.setCustomParameters({ hl: "en" });
@@ -466,14 +467,13 @@ async function fetchAllUsers(userId) {
   //alert('script loaded...');
 
   // Check if it's a verification request
- /*
+
   if (mode === 'verifyEmail' && oobCode) {
     confirmEmailVerification(oobCode);
-    alert('verification function called!!');
   }
   
   function confirmEmailVerification(oobCode) {
-    alert('alert inside confirmation fn');
+  //  alert('alert inside confirmation fn');
    try {
     applyActionCode(auth, oobCode)
       .then(() => {
@@ -488,7 +488,7 @@ async function fetchAllUsers(userId) {
        alert(error);
    }
   }
-*/
+
 
 
   if (mode && mode === 'login') {
@@ -500,6 +500,7 @@ async function fetchAllUsers(userId) {
      if (user) {
         isUser = true;
         console.log(JSON.stringify(user));
+   //     fetchAllUsers(user.uid);
         accBox.style.display = 'none';
         pfBox.style.display = 'grid';
         login.style.display = 'none';
@@ -763,7 +764,13 @@ function handleAuthError(error) {
           const name = signName.value.trim();
           await updateProfile(user, { displayName: name });
      //     const user = userCredential.user;
-          await sendEmailVerification(user);
+       
+          const actionCodeSettings = {
+            url: 'https://sxsco.github.io/edu/index.html?mode=login',
+            handleCodeInApp: true
+          };        
+          await sendEmailVerification(user, actionCodeSettings);
+       
           signStatus.textContent = "Verification link sent! Please check your email and verify your account before logging in.";
           signOut(auth);
           setTimeout(() => {
