@@ -473,30 +473,21 @@ async function fetchAllUsers(userId) {
   }
   
   function confirmEmailVerification(oobCode) {
-  //  alert('alert inside confirmation fn');
-   try {
     applyActionCode(auth, oobCode)
-      .then(() => {
+    .then(() => {
         alert("Email Verified Successfully! ✅");
-        // Redirect to login page
-     //   window.location.href = "/login";
-      })
-      .catch((error) => {
+        window.location.replace('index.html?mode=login');
+    })
+    .catch((error) => {
         alert("Verification Failed: " + error.message);
-      });
-   } catch (error) {
-       alert(error);
-   }
+    });
   }
-
-
 
   if (mode && mode === 'login') {
       account.classList.add('show');
   }
-      
-  
-   onAuthStateChanged(auth, (user) => {
+       
+  onAuthStateChanged(auth, (user) => {
      if (user) {
         isUser = true;
         console.log(JSON.stringify(user));
@@ -543,7 +534,7 @@ async function fetchAllUsers(userId) {
            login.style.display = 'flex';
          }
      }
-   });
+  });
 
 
   function initGoogleSign() {
@@ -762,21 +753,13 @@ function handleAuthError(error) {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
           const user = userCredential.user;
           const name = signName.value.trim();
-          await updateProfile(user, { displayName: name });
-     //     const user = userCredential.user;
-       
-          const actionCodeSettings = {
-            url: 'https://sxsco.github.io/edu/index.html?mode=login',
-            handleCodeInApp: true
-          };        
-          await sendEmailVerification(user, actionCodeSettings);
-       
+          await updateProfile(user, { displayName: name });      
+          await sendEmailVerification(user);       
           signStatus.textContent = "Verification link sent! Please check your email and verify your account before logging in.";
           signOut(auth);
           setTimeout(() => {
             window.location.replace('index.html?mode=login');
           }, 2000);
-     //     alert(userCredential.user);    
     } catch (error) {
         signStatus.textContent = handleAuthError(error);
     }
