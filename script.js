@@ -7,6 +7,7 @@
     onAuthStateChanged,
     GoogleAuthProvider,
     signInWithPopup,
+    confirmPasswordReset,
     sendPasswordResetEmail,
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
@@ -335,15 +336,9 @@ function markAllNotificationsAsSeen() {
         logText.textContent = 'Close';
     }
   });
-  
-  //const testurl = 'reg.html';
- // console.log(btoa(lastPart));
-  
-  //window.location.href = `/login/?next=${encodeURIComponent(lastPart)}`;
-  
+    
   
             /*---- account-manager ----*/
-  //  localStorage.setItem('test', 'hello');
   const accBox = document.getElementById('acc-box');
   const pfBox = document.getElementById('profile-box');
   const frontBox = document.getElementById('front-box');
@@ -393,6 +388,7 @@ function markAllNotificationsAsSeen() {
   const provider = new GoogleAuthProvider()  
 
 /*
+      // database system
 async function fetchAllUsers(userId) {
   const key = 'abc123'
   
@@ -456,20 +452,20 @@ async function fetchAllUsers(userId) {
   
   
  
-    // Get the oobCode from URL
+  // Getting params from url ↓
+  
   const urlParams = new URLSearchParams(window.location.search);
   const mode = urlParams.get('mode');
-  //alert(mode);
   const refPage = urlParams.get('ref');
   const oobCode = urlParams.get('oobCode');
-  //alert(oobCode);
 
-  //alert('script loaded...');
-
-  // Check if it's a verification request
-
-  if (mode === 'verifyEmail' && oobCode) {
-    confirmEmailVerification(oobCode);
+  if (oobCode) {
+    if (mode === 'verifyEmail') {
+      confirmEmailVerification(oobCode);
+    } else if (mode === 'resetPassword') {
+        const newPassword = prompt("Enter new password");
+        resetUserPassword(oobCode, newPassword);
+    }
   }
   
   function confirmEmailVerification(oobCode) {
@@ -495,7 +491,7 @@ async function fetchAllUsers(userId) {
         accBox.style.display = 'none';
         pfBox.style.display = 'grid';
         login.style.display = 'none';
-        name.textContent = user.displayName;                                                            
+        name.textContent = user.displayName;                                                
         email.textContent = user.email;
         pfName.value = user.displayName;                                                            
         pfEmail.value = user.email;
@@ -560,11 +556,11 @@ async function fetchAllUsers(userId) {
     .catch((error) => {
       console.log("Sign in failed:", error);
       google.accounts.id.prompt();
-    });
-    
-    
+    });   
   }
       
+  // Forgot & Reset Password ↓
+  
   forgot.addEventListener('click', () => {
       fgEmail.value = logEmail.value.trim();
       logBox.classList.add('hide');
@@ -579,15 +575,22 @@ async function fetchAllUsers(userId) {
        setTimeout(() => {
            window.location.replace('index.html?mode=login');
        }, 2000);
-
-    //   alert("mail to reset password sent successfully...");
     })
     .catch((error) => {
         fgStatus.textContent = handleAuthError(error);
     });
   });
   
-  
+  function resetUserPassword(oobCode, newPassword) {
+    confirmPasswordReset(auth, oobCode, newPassword)
+    .then(() => {
+      alert("Password Reset Successful! ✅");
+      window.location.replace('index.html?mode=login');
+    })
+    .catch((error) => {
+      alert("Error: " + error.message);
+    });
+  }
   
   
   
@@ -655,11 +658,6 @@ async function fetchAllUsers(userId) {
         logStatus.textContent = 'Some error occurred, please try again!';
       });
   });
-
-// Function to upload image to Imgbb
-/*
-
-*/  
        
 
 function handleAuthError(error) {
