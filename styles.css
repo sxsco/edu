@@ -1361,13 +1361,22 @@ form {
     margin-bottom: 1rem;
 }
 #logout-btn {
-    width: 17rem;
-    padding: .6rem;
+    width: 14rem;
+    padding: .5rem;
     color: maroon;
     margin-top: 3rem;
     background: #ffffff;
     border-radius: .6rem;
     border: .05rem solid maroon;
+}
+#update-pw {
+    width: 14rem;
+    padding: .5rem;
+    color: skyblue;
+    margin-top: 2rem;
+    background: #ffffff;
+    border-radius: .6rem;
+    border: .05rem solid deepskyblue;
 }
 .pf-btn-box {
     display: grid;

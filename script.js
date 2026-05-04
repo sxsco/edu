@@ -2,6 +2,7 @@
   import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";
   import {
     getAuth,
+    signOut,
     updateProfile,
     applyActionCode,
     onAuthStateChanged,
@@ -13,7 +14,9 @@
     signInWithEmailAndPassword,
     signInWithCredential,
     sendEmailVerification,
-    signOut,
+    EmailAuthProvider, 
+    reauthenticateWithCredential, 
+    updatePassword,
     signInWithPhoneNumber,
     RecaptchaVerifier } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js";
   import {
@@ -793,6 +796,7 @@ function handleAuthError(error) {
   const picDelBtn = document.getElementById('pic-del-btn');
   const fileInput = document.getElementById('inp_pf_photo');
   const pfInputs = document.querySelectorAll('#profile-box input');
+  const updatePw = document.getElementById('update-pw');
   
   let canEdit = false;
  
@@ -867,8 +871,41 @@ async function updateUserProfileWithNewImage(user, photoUrl) {
         console.error("Error:", error);
     }
   }
- 
- 
+  
+  // Update user password ↓
+  
+  function changePassword(oldPw) {
+    const user = auth.currentUser;
+    const credential = EmailAuthProvider.credential(
+      user.email,
+      oldPw
+    );
+
+    reauthenticateWithCredential(user, credential)
+    .then(() => {
+      console.log("✅ Password verified - now update");
+      const newPw = prompt("Enter new password");
+      return updatePassword(user, newPw);
+    })
+    .then(() => {
+      alert("✅ Password updated successfully!");
+      return signOut(auth);
+    })
+    .then(() => {
+      window.location.replace('index.html?mode=login');
+    })
+    .catch((error) => {
+      alert("❌ " + error.message);
+    });
+  }
+  
+  updatePw.addEventListener('click', () => {
+    const oldPw = prompt("Enter old password");
+    changePassword(oldPw);
+  });
+  
+  // Edit user profile ↓
+  
   pfBtn.addEventListener('click', async () => {
     pfBtnSlider.classList.toggle('slide');
     const editable = pfBtnSlider.classList.contains('slide');
