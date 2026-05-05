@@ -711,6 +711,9 @@ function handleAuthError(error) {
     if (errorMessage.includes("credential-already-in-use")) {
         return "This account is already linked to another sign-in method.";
     }
+    if (errorMessage.includes("user-disabled")) {
+        return "This account is blocked! Contact support.";
+    }
 
     // If error is something else (very rare)
     return "Something went wrong! Please try again later.";
