@@ -748,11 +748,11 @@ complexQuery();
   function resetUserPassword(oobCode, newPassword) {
     confirmPasswordReset(auth, oobCode, newPassword)
     .then(() => {
-      alert("Password Reset Successful! ✅");
+      toast.success("Password Reset Successful!");
       window.location.replace('/index.html?mode=login');
     })
     .catch((error) => {
-      alert("Error: " + error.message);
+      toast.error(error.message);
     });
   }
   
@@ -1070,7 +1070,7 @@ async function updateUserProfileWithNewImage(user, photoUrl) {
       window.location.replace(next);
       
     } catch (error) {
-        alert("❌ " + error.message);
+        toast.error(error.message);
     }
   }
   
