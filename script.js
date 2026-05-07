@@ -17,6 +17,7 @@
     EmailAuthProvider, 
     reauthenticateWithCredential, 
     updatePassword,
+    deleteUser,
     signInWithPhoneNumber,
     RecaptchaVerifier } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js";
   import {
@@ -800,6 +801,7 @@ function handleAuthError(error) {
   const fileInput = document.getElementById('inp_pf_photo');
   const pfInputs = document.querySelectorAll('#profile-box input');
   const updatePw = document.getElementById('update-pw');
+  const deleteAcc = document.getElementById('delete-acc');
   
   let canEdit = false;
  
@@ -877,8 +879,9 @@ async function updateUserProfileWithNewImage(user, photoUrl) {
   
   // Update user password ↓
   
-  function changePassword(oldPw) {
+  function reAuth(task, msg, next) {
     const user = auth.currentUser;
+    const oldPw = prompt("Enter old password");
     const credential = EmailAuthProvider.credential(
       user.email,
       oldPw
@@ -886,16 +889,20 @@ async function updateUserProfileWithNewImage(user, photoUrl) {
 
     reauthenticateWithCredential(user, credential)
     .then(() => {
-      console.log("✅ Password verified - now update");
-      const newPw = prompt("Enter new password");
-      return updatePassword(user, newPw);
+      console.log("✅ Password verified...");
+      if (task === 'update-pw') {
+        const newPw = prompt("Enter new password");
+        return updatePassword(user, newPw);
+      } else if (task === 'delete-acc') {
+          return deleteUser(user);
+      }
     })
     .then(() => {
-      alert("✅ Password updated successfully!");
+      alert(msg);
       return signOut(auth);
     })
     .then(() => {
-      window.location.replace('index.html?mode=login');
+      window.location.replace(next);
     })
     .catch((error) => {
       alert("❌ " + error.message);
@@ -903,8 +910,20 @@ async function updateUserProfileWithNewImage(user, photoUrl) {
   }
   
   updatePw.addEventListener('click', () => {
-    const oldPw = prompt("Enter old password");
-    changePassword(oldPw);
+    const action = 'update-pw';
+    const alert = "✅ Password updated successfully!";
+    const redirect = 'index.html?mode=login';
+    reAuth(action, alert, redirect);
+  });
+  
+  deleteAcc.addEventListener('click', () => {
+    const action = 'delete-acc';
+    const alert = "😞 Account deleted successfully!";
+    const redirect = 'index.html';
+    
+    if (confirm("Do you really want to delete account?")) {
+      reAuth(action, alert, redirect);
+    }
   });
   
   // Edit user profile ↓

@@ -1363,20 +1363,29 @@ form {
 #logout-btn {
     width: 14rem;
     padding: .5rem;
-    color: maroon;
+    color: #ff6700;
     margin-top: 3rem;
     background: #ffffff;
     border-radius: .6rem;
-    border: .05rem solid maroon;
+    border: .05rem solid #ff6700;
 }
 #update-pw {
     width: 14rem;
     padding: .5rem;
-    color: skyblue;
+    color: deepskyblue;
     margin-top: 2rem;
     background: #ffffff;
     border-radius: .6rem;
     border: .05rem solid deepskyblue;
+}
+#delete-acc {
+    width: 14rem;
+    padding: .5rem;
+    color: #e53935;
+    margin-top: 2rem;
+    background: #ffffff;
+    border-radius: .6rem;
+    border: .05rem solid #e53935;
 }
 .pf-btn-box {
     display: grid;
