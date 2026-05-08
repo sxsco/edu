@@ -15,7 +15,8 @@
     signInWithCredential,
     sendEmailVerification,
     EmailAuthProvider, 
-    reauthenticateWithCredential, 
+    reauthenticateWithCredential,
+    reauthenticateWithPopup,
     updatePassword,
     deleteUser,
     signInWithPhoneNumber,
@@ -879,34 +880,41 @@ async function updateUserProfileWithNewImage(user, photoUrl) {
   
   // Update user password ↓
   
-  function reAuth(task, msg, next) {
-    const user = auth.currentUser;
-    const oldPw = prompt("Enter old password");
-    const credential = EmailAuthProvider.credential(
-      user.email,
-      oldPw
-    );
+  async function reAuth(task, msg, next) {   
+    try {    
+      const user = auth.currentUser;
+      const providerId = user.providerData[0].providerId;
+      console.log(providerId);
+   
+      if (providerId === "password") {   
+        const oldPw = prompt("Enter old password");
+        const credential = EmailAuthProvider.credential(
+          user.email,
+          oldPw
+        );
 
-    reauthenticateWithCredential(user, credential)
-    .then(() => {
-      console.log("✅ Password verified...");
+        await reauthenticateWithCredential(user, credential);
+        console.log("✅ Password verified...");
+          
+      } else if (providerId === "google.com") {
+          await reauthenticateWithPopup(user, provider);
+          console.log("✅ Google user verified...");
+      }
+      
       if (task === 'update-pw') {
         const newPw = prompt("Enter new password");
-        return updatePassword(user, newPw);
+        await updatePassword(user, newPw);
       } else if (task === 'delete-acc') {
-          return deleteUser(user);
+          await deleteUser(user);
       }
-    })
-    .then(() => {
+      
       alert(msg);
-      return signOut(auth);
-    })
-    .then(() => {
+      await signOut(auth);
       window.location.replace(next);
-    })
-    .catch((error) => {
-      alert("❌ " + error.message);
-    });
+      
+    } catch (error) {
+        alert("❌ " + error.message);
+    }
   }
   
   updatePw.addEventListener('click', () => {
