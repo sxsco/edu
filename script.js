@@ -392,22 +392,23 @@ function markAllNotificationsAsSeen() {
   const db = getFirestore(app);
   const provider = new GoogleAuthProvider()  
 
-/*
-      // database system
-async function fetchAllUsers(userId) {
-  const key = 'abc123'
+
+  // database management ↓
+      
+  async function fetchAllUsers(userId) {
+    const key = 'abc123'
   
-  if ('abc12' === key) {
-    const items = await getDocs(collection(db, "users"));
-    items.forEach((item) => {
-      console.log(item.id, " => ", JSON.stringify(item.data(), null, 2));
-    });
-  } else {
-    const item = await getDoc(doc(db, "users", userId));
-    console.log(item.id, " => ", JSON.stringify(item.data(), null, 2));
+    if ('abc12' === key) {
+      const items = await getDocs(collection(db, "users"));
+      items.forEach((item) => {
+        console.log(item.id, " => ", JSON.stringify(item.data(), null, 2));
+      });
+    } else {
+        const item = await getDoc(doc(db, "users", userId));
+        console.log(item.id, " => ", JSON.stringify(item.data(), null, 2));
+    }
   }
-}
-*/
+
 
    
   auth.useDeviceLanguage();
@@ -878,7 +879,7 @@ async function updateUserProfileWithNewImage(user, photoUrl) {
     }
   }
   
-  // Update user password ↓
+  // Update user password & delete account ↓
   
   async function reAuth(task, msg, next) {   
     try {    
