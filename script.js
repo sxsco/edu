@@ -23,10 +23,8 @@
     RecaptchaVerifier } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js";
   import {
     getFirestore,
-    doc,
-    setDoc,
-    getDoc,
-    getDocs,
+    doc, addDoc, setDoc, getDoc, getDocs,
+    query, where,
     collection } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js";
 
 export function showNotification(message, timestamp) {
@@ -392,13 +390,70 @@ function markAllNotificationsAsSeen() {
   const db = getFirestore(app);
   const provider = new GoogleAuthProvider()  
 
+  // testing ↓
+
+/*  
+async function seedUsers() {
+  const users = [
+    { name: "Aman", email: "aman@gmail.com", emailLower: "aman@gmail.com", age: 18 },
+    { name: "Rahul", email: "rahul@gmail.com", emailLower: "rahul@gmail.com", age: 20 },
+    { name: "Sneha", email: "sneha@gmail.com", emailLower: "sneha@gmail.com", age: 18 },
+    { name: "Priya", email: "priya@gmail.com", emailLower: "priya@gmail.com", age: 22 }
+  ];
+
+  for (let user of users) {
+    await addDoc(collection(db, "users"), user);
+  }
+
+  console.log("Users added!");
+}
+
+seedUsers();
+
+
+async function findUser() {
+  const q = query(
+    collection(db, "users"),
+    where("age", "==", 18)
+  );
+
+  const snap = await getDocs(q);
+
+  snap.forEach(doc => {
+    console.log(doc.id, JSON.stringify(doc.data(), null, 2));
+  });
+}
+
+findUser();
+*/
+
+async function complexQuery() {
+  const q = query(
+    collection(db, "users"),
+    where("age", ">", 18),
+   // where("age", "==", 19),
+    where("emailLower", "==", "aman@gmail.com")
+  );
+
+  const snap = await getDocs(q);
+
+  snap.forEach(doc => {
+    console.log(doc.id, JSON.stringify(doc.data(), null, 2));
+   // console.log(doc.data());
+  });
+}
+
+complexQuery();
+
+
+
 
   // database management ↓
       
   async function fetchAllUsers(userId) {
     const key = 'abc123'
-  
-    if ('abc12' === key) {
+ 
+    if ('abc123' === key) {
       const items = await getDocs(collection(db, "users"));
       items.forEach((item) => {
         console.log(item.id, " => ", JSON.stringify(item.data(), null, 2));
@@ -493,7 +548,7 @@ function markAllNotificationsAsSeen() {
      if (user) {
         isUser = true;
         console.log(JSON.stringify(user));
-   //     fetchAllUsers(user.uid);
+      //  fetchAllUsers(user.uid);
         accBox.style.display = 'none';
         pfBox.style.display = 'grid';
         login.style.display = 'none';
