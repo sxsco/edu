@@ -392,25 +392,7 @@ function markAllNotificationsAsSeen() {
 
   // testing ↓
 
-/*  
-async function seedUsers() {
-  const users = [
-    { name: "Aman", email: "aman@gmail.com", emailLower: "aman@gmail.com", age: 18 },
-    { name: "Rahul", email: "rahul@gmail.com", emailLower: "rahul@gmail.com", age: 20 },
-    { name: "Sneha", email: "sneha@gmail.com", emailLower: "sneha@gmail.com", age: 18 },
-    { name: "Priya", email: "priya@gmail.com", emailLower: "priya@gmail.com", age: 22 }
-  ];
-
-  for (let user of users) {
-    await addDoc(collection(db, "users"), user);
-  }
-
-  console.log("Users added!");
-}
-
-seedUsers();
-
-
+/*
 async function findUser() {
   const q = query(
     collection(db, "users"),
