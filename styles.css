@@ -1368,6 +1368,10 @@ form {
     background: #ffffff;
     border-radius: .6rem;
     border: .05rem solid #ff6700;
+    transition: background .5s ease;
+}
+#logout-btn:hover {
+    background: #ffe0cc;
 }
 #update-pw {
     width: 14rem;
@@ -1377,6 +1381,10 @@ form {
     background: #ffffff;
     border-radius: .6rem;
     border: .05rem solid deepskyblue;
+    transition: background .5s ease;
+}
+#update-pw:hover {
+    background: #e6f9ff;
 }
 #delete-acc {
     width: 14rem;
@@ -1386,6 +1394,10 @@ form {
     background: #ffffff;
     border-radius: .6rem;
     border: .05rem solid #e53935;
+    transition: background .5s ease;
+}
+#delete-acc:hover {
+    background: #fce9e8;
 }
 .pf-btn-box {
     display: grid;
