@@ -1153,9 +1153,14 @@ form {
 }
 #forgot {
   margin: 0;
+  color: #ffffff;
   margin-left: auto;
   text-align: right;
   width: fit-content;
+  transition: color .5s ease;
+}
+#forgot:hover {
+  color: deepskyblue;
 }
 #login-btn, #signup-btn, #resetPw-btn {
   width: 10rem;
@@ -1371,7 +1376,7 @@ form {
     transition: background .5s ease;
 }
 #logout-btn:hover {
-    background: #ffe0cc;
+    background: #ffe5d6;
 }
 #update-pw {
     width: 14rem;
