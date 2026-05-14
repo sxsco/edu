@@ -1160,7 +1160,7 @@ form {
   transition: color .5s ease;
 }
 #forgot:hover {
-  color: deepskyblue;
+  color: #4da6ff;
 }
 #login-btn, #signup-btn, #resetPw-btn {
   width: 10rem;
