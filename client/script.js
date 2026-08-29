@@ -302,13 +302,13 @@ function markAllNotificationsAsSeen() {
     location.reload();
   });
   fs.addEventListener('click', () => {
-    window.location.href = '/fs.html';
+    window.location.href = '/fs';
   });
   fb.addEventListener('click', () => {
-    window.location.href = '/fb.html';
+    window.location.href = '/fb';
   });
   cu.addEventListener('click', () => {
-    window.location.href = '/cu.html';
+    window.location.href = '/cu';
   });
 
            /*---- create-toast ----*/
