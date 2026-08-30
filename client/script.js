@@ -425,7 +425,7 @@ function markAllNotificationsAsSeen() {
   const regSlide = document.getElementById('slider-box-2');
   regSlide.addEventListener('click', () => {
     if (isUser) {
-        window.location.href = '/reg.html';
+        window.location.href = '/reg';
     } else {
         account.classList.add('show');
         logIcon.classList.replace('fa-user-large', 'fa-chevron-right');
