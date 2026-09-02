@@ -963,7 +963,6 @@ async function uploadToImgbb(imageUrl) {
     const urlRes = await fetch(imageUrl);
     const apiKey = "d8e4ccd142ddf84767dac0474af959ea";  // Replace with your Imgbb API key
     const blob = await urlRes.blob();
-   // alert(blob);    
     const formData = new FormData();
     formData.append("image", blob);
     const response = await fetch(`https://api.imgbb.com/1/upload?key=${apiKey}`, {
