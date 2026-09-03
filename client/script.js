@@ -969,7 +969,7 @@ async function uploadToImgbb(imageUrl) {
         method: "POST",
         body: formData
     });
-  //  alert('after append image');
+
     const data = await response.json();
     if (data.success) {
     //    alert('success to get perma url');
