@@ -972,7 +972,6 @@ async function uploadToImgbb(imageUrl) {
 
     const data = await response.json();
     if (data.success) {
-    //    alert('success to get perma url');
         return data.data.url;  // Permanent image URL
     } else {
         console.error("Image upload failed:", data.error);
