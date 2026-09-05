@@ -982,7 +982,6 @@ async function uploadToImgbb(imageUrl) {
 async function updateUserProfileWithNewImage(user, photoUrl) {
   try {
     if (user && photoUrl) {
-   // alert(photoUrl);
         const permanentUrl = await uploadToImgbb(photoUrl);
         if (permanentUrl) {
             await updateProfile(user, { photoURL: permanentUrl });
