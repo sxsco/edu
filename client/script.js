@@ -985,7 +985,7 @@ async function updateUserProfileWithNewImage(user, photoUrl) {
         const permanentUrl = await uploadToImgbb(photoUrl);
         if (permanentUrl) {
             await updateProfile(user, { photoURL: permanentUrl });
-       //    Profile updated successfully
+       //    Profile updated succe 
         }
     } else {
     //    alert('photourl not found');
