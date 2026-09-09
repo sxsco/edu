@@ -1022,7 +1022,7 @@ async function updateUserProfileWithNewImage(user, photoUrl) {
     }
   }
   
-  // onHover over error icon in profile email ↓
+  // onHover error icon in profile email ↓
   pfEmailCheck.addEventListener('mouseenter', () => {
       snack.toastElement.classList.add('alert');
   });
